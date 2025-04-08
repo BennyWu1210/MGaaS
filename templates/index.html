@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head><title>Meme Generator</title></head>
+  <body>
+    <h1>Create Your Meme 🐸</h1>
+    <form id="memeForm" enctype="multipart/form-data">
+      Top Text: <input type="text" name="top"><br>
+      Bottom Text: <input type="text" name="bottom"><br>
+      Image: <input type="file" name="image"><br>
+      <button type="submit">Generate Meme</button>
+    </form>
+    <br>
+    <img id="result" width="300" style="display:none;" />
+    <script>
+      document.getElementById("memeForm").onsubmit = async function (e) {
+        e.preventDefault();
+        const formData = new FormData(this);
+        const res = await fetch("/meme", { method: "POST", body: formData });
+        const blob = await res.blob();
+        document.getElementById("result").src = URL.createObjectURL(blob);
+        document.getElementById("result").style.display = "block";
+      };
+    </script>
+  </body>
+</html>
